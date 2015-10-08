@@ -93,8 +93,8 @@ function HDFSRequestInNode(n) {
 
 		var url = bigcredentials.WebhdfsUrl;
 		url = url + homeDirectory + filename;
-		node.log("url = " + url);
-		node.log("filename = " + filename);
+		
+		node.log("filename777 = " + filename);
 		if (filename == "") {
 			node.warn('No filename specified');
 			node.status({fill:"grey",shape:"dot",text:""});
@@ -105,6 +105,8 @@ function HDFSRequestInNode(n) {
 			var payload = null;
 			opts.auth = bigcredentials.userid+":"+(bigcredentials.password||"");
 			var req = ((/^https/.test(url))?httpsForRead:httpForRead).request(opts,function(res) {
+				
+				node.log("req = " + req);
 				if(options['encoding'] == 'utf8') {
 					res.setEncoding('utf8');
 				} else {

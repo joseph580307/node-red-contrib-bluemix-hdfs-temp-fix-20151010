@@ -229,6 +229,8 @@ function HDFSRequest(n) {
 					opts.headers['content-length'] = Buffer.byteLength(data);
 				}
 			}
+			node.log("opts = " + opts);
+
 			var req = ((/^https/.test(url))?https:http).request(opts,function(res) {
 				if(opts['encoding'] == 'utf8') {
 					res.setEncoding('utf8');

@@ -172,6 +172,8 @@ function HDFSRequest(n) {
 
 		var url = bigcredentials.WebhdfsUrl;
 		url = url + homeDirectory + filename;
+		node.log("url=" + url)
+		
 
 		var fileChanged = false;
 		node.log("filename = " + filename);

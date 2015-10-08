@@ -93,7 +93,7 @@ function HDFSRequestInNode(n) {
 
 		var url = bigcredentials.WebhdfsUrl;
 		url = url + homeDirectory + filename;
-
+		node.log("url = " + url);
 		node.log("filename = " + filename);
 		if (filename == "") {
 			node.warn('No filename specified');
@@ -134,6 +134,7 @@ function HDFSRequestInNode(n) {
 					node.status({fill:"grey",shape:"dot",text:"read"});
 				});
 			});
+			node.log("req = " + req);
 			req.on('error',function(err) {
 				msg.payload = err.toString();
 				msg.statusCode = err.code;

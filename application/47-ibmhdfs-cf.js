@@ -298,6 +298,7 @@ function HDFSRequest(n) {
 						if (opts.headers['content-length'] == null) {
 							opts.headers['content-length'] = Buffer.byteLength(data);
 						}
+					 
 						var req1 = ((/^https/.test(url))?https:http).request(opts,function(res1) {
 							res1.setEncoding('utf8');
 							msg.statusCode = res1.statusCode;
@@ -306,6 +307,44 @@ function HDFSRequest(n) {
 
 							res1.on('data',function(chunk) {
 								node.status({fill:"green",shape:"dot",text:"connected"});
+								
+//								 Reply to the CREATE OP response 
+								if(msg.statusCode == 307) {
+									node.status({fill:"green",shape:"dot",text:"connected"});
+									var newLocation1 = res1.headers.location;
+									putPostHeaders = {
+										'Content-Type' : 'application/octet-stream',
+										'Content-Length' : Buffer.byteLength(data)
+							    	};
+
+									var option1 = {
+										path : newLocation1.substring(newLocation.indexOf(':8443') + 5),
+										host : url.substring(url.indexOf('https://') + 8, url.indexOf(':8443') ),
+										port : 8443,
+										method : opts.method,
+										headers : putPostHeaders,
+										auth : bigcredentials.userid+":"+(bigcredentials.password||""),
+										encoding : opts.encoding,
+									};
+
+ 
+
+									var reqPut1 = https.request(option1, function(res) {
+										console.log("Status code 2", res.statusCode );
+										node.log("Status code 2", res.statusCode);
+
+										res1.on('data', function(d) {
+											console.info('PUT result:\n');
+											process.stdout.write(d);
+											console.info('\n\nPUT completed');
+										});
+
+									});
+									node.log("Content = " + data + " ends");
+									reqPut.write(data);
+									reqPut.end();
+									node.status({fill:"grey",shape:"dot",text:"inserted / updated"});
+								}
 								
 								if(msg.statusCode == 404 ) {
 									node.error("Unable to create the file......");	

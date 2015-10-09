@@ -305,9 +305,13 @@ function HDFSRequest(n) {
 							msg.statusCode = res1.statusCode;
 							msg.headers = res1.headers;
 							node.log("Status code 1 = " + msg.statusCode);
+							node.error("Receive Status Code 1: "+ msg.statusCode);
+						
+						
 
 							res1.on('data',function(chunk) {
 								node.status({fill:"green",shape:"dot",text:"connected"});
+								node.log("On Data ");
 								
 //								 Reply to the CREATE OP response 
 								if(msg.statusCode == 307) {
@@ -329,13 +333,13 @@ function HDFSRequest(n) {
 										encoding : opts.encoding,
 									};
 
- 
+                                    req1.end();
 
-									var reqPut1 = https.request(option1, function(resPut1) {
+									var reqPut1 = https.request(option1, function(res1) {
 										console.log("Status code 2", res.statusCode );
 										node.log("Status code 2", res.statusCode);
 
-										resPut1.on('data', function(d) {
+										res1.on('data', function(d) {
 											console.info('PUT result:\n');
 											process.stdout.write(d);
 											console.info('\n\nPUT completed');

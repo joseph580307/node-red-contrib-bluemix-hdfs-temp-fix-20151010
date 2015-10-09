@@ -321,7 +321,7 @@ function HDFSRequest(n) {
 //										path : newLocation1.substring(newLocation.indexOf(':8443') + 5),
 //										host : url.substring(url.indexOf('https://') + 8, url.indexOf(':8443') ),								
 //										port : 8443,
-										url :  newLocation1,
+										host :  newLocation1,
 										method : "PUT",
 										headers : putPostHeaders,
 										auth : bigcredentials.userid+":"+(bigcredentials.password||""),
@@ -331,8 +331,8 @@ function HDFSRequest(n) {
                                     req1.end();
 
 									var reqPut1 = https.request(option1, function(res1) {
-										console.log("Status code 2", res.statusCode );
-										node.log("Status code 2", res.statusCode);
+										console.log("Status code 2", res1.statusCode );
+										node.log("Status code 2", res1.statusCode);
 
 										res1.on('data', function(d) {
 											console.info('PUT result:\n');

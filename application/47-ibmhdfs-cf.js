@@ -280,7 +280,7 @@ function HDFSRequest(n) {
 					node.status({fill:"grey",shape:"dot",text:"inserted / updated"});
 				}
 
-/*
+
 				res.on('data',function(chunk) {
 					node.status({fill:"green",shape:"dot",text:"connected"});
 					node.log("Status code = " + msg.statusCode);
@@ -341,7 +341,7 @@ function HDFSRequest(n) {
 					}
 					node.log("Payload in DATA = " + data);
 				});
-*/
+
 
 				res.on('end',function() {
 					node.send(msg);

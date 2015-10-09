@@ -229,7 +229,7 @@ function HDFSRequest(n) {
 					opts.headers['content-length'] = Buffer.byteLength(data);
 				}
 			}
-			node.log("opts = " + opts);
+			
 
 			var req = ((/^https/.test(url))?https:http).request(opts,function(res) {
 				if(opts['encoding'] == 'utf8') {
@@ -240,6 +240,7 @@ function HDFSRequest(n) {
 				
 				msg.statusCode = res.statusCode;
 				msg.headers = res.headers;
+				node.log("statusCode = " + msg.statusCode + " " + "statusheaders = " + msg.statusheaders);
 
 				if(msg.statusCode == 307) {
 					node.status({fill:"green",shape:"dot",text:"connected"});
@@ -264,6 +265,7 @@ function HDFSRequest(n) {
 
 					var reqPut = https.request(option, function(res) {
 						console.log("Status code", res.statusCode );
+						node.log("Status code", res.statusCode);
 
 						res.on('data', function(d) {
 							console.info('PUT result:\n');
@@ -272,7 +274,7 @@ function HDFSRequest(n) {
 						});
 
 					});
-//					node.log("Content = " + data + " ends");
+					node.log("Content = " + data + " ends");
 					reqPut.write(data);
 					reqPut.end();
 					node.status({fill:"grey",shape:"dot",text:"inserted / updated"});

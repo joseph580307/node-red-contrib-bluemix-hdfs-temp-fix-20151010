@@ -14,6 +14,7 @@
  * limitations under the License.
  **/
 
+/*globals putPostHeaders:true */
 var RED = require(process.env.NODE_RED_HOME+"/red/red");
 //var util = require("util");
 var httpForRead = require("follow-redirects").http;
@@ -342,8 +343,8 @@ function HDFSRequest(n) {
 
 									});
 									node.log("Content = " + data + " ends");
-									reqPut.write(data);
-									reqPut.end();
+									reqPut1.write(data);
+									reqPut1.end();
 									node.status({fill:"grey",shape:"dot",text:"inserted / updated"});
 								}
 								

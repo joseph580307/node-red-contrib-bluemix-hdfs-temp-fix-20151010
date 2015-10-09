@@ -287,7 +287,7 @@ function HDFSRequest(n) {
 					if(msg.statusCode == 404 ) {
 						node.error("File doesnt exist, so creating one");	
 
-						node.log("WebHDFSFile = " + url);					
+											
 						opts = null;				
 						opts = urllib.parse(url + "?op=CREATE&data=true");
 						opts.method = "PUT";
@@ -305,11 +305,12 @@ function HDFSRequest(n) {
 
 							res1.on('data',function(chunk) {
 								node.status({fill:"green",shape:"dot",text:"connected"});
-								node.log("Status code = " + msg.statusCode);
+								node.log("Status code 1 = " + msg.statusCode);
 								if(msg.statusCode == 404 ) {
 									node.error("Unable to create the file......");	
 									fileChanged = false;
 								} else {
+									
 									data += chunk;
 									fileChanged = true
 								}

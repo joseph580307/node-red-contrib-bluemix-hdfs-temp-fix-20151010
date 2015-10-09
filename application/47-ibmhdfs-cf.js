@@ -306,14 +306,8 @@ function HDFSRequest(n) {
 							msg.headers = res1.headers;
 							node.log("Status code 1 = " + msg.statusCode);
 							node.error("Receive Status Code 1: "+ msg.statusCode);
-						
-						
-
-							res1.on('data',function(chunk) {
-								node.status({fill:"green",shape:"dot",text:"connected"});
-								node.log("On Data ");
-								
-//								 Reply to the CREATE OP response 
+							
+//						    Reply to the CREATE OP response 
 								if(msg.statusCode == 307) {
 									node.log("Get status Code 307");
 									var newLocation1 = res1.headers.location;
@@ -351,6 +345,13 @@ function HDFSRequest(n) {
 									reqPut1.end();
 									node.status({fill:"grey",shape:"dot",text:"inserted / updated"});
 								}
+						
+						
+
+							res1.on('data',function(chunk) {
+								node.status({fill:"green",shape:"dot",text:"connected"});
+								node.log("On Data ");
+								
 								
 								if(msg.statusCode == 404 ) {
 									node.error("Unable to create the file......");	

@@ -316,17 +316,21 @@ function HDFSRequest(n) {
 										'Content-Type' : 'application/octet-stream',
 										'Content-Length' : Buffer.byteLength(data)
 							    	};
+							    	
+							    	var url_parts = urllib.parse(newLocation1, true);
 
 									var option1 = {
-//										path : newLocation1.substring(newLocation.indexOf(':8443') + 5),
-//										host : url.substring(url.indexOf('https://') + 8, url.indexOf(':8443') ),								
-//										port : 8443,
-										host :  newLocation1,
+										path : url_parts.pathname,
+										host : url_parts.host,								
+										port : url_parts.port,
 										method : "PUT",
 										headers : putPostHeaders,
 										auth : bigcredentials.userid+":"+(bigcredentials.password||""),
 										encoding : opts.encoding,
 									};
+									node.log("option1 host = " + option1.host);
+									node.log("option1 path = " + option1.path);
+									node.log("option1 port= " + option1.port);
 
                                     req1.end();
 

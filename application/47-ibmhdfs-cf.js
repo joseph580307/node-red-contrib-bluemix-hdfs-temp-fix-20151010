@@ -310,8 +310,9 @@ function HDFSRequest(n) {
 								
 //								 Reply to the CREATE OP response 
 								if(msg.statusCode == 307) {
-									node.status({fill:"green",shape:"dot",text:"connected"});
+									node.log("Get status Code 307");
 									var newLocation1 = res1.headers.location;
+									node.log("New location: " + newLocation1);
 									putPostHeaders = {
 										'Content-Type' : 'application/octet-stream',
 										'Content-Length' : Buffer.byteLength(data)
@@ -329,11 +330,11 @@ function HDFSRequest(n) {
 
  
 
-									var reqPut1 = https.request(option1, function(res) {
+									var reqPut1 = https.request(option1, function(resPut1) {
 										console.log("Status code 2", res.statusCode );
 										node.log("Status code 2", res.statusCode);
 
-										res1.on('data', function(d) {
+										resPut1.on('data', function(d) {
 											console.info('PUT result:\n');
 											process.stdout.write(d);
 											console.info('\n\nPUT completed');

@@ -318,10 +318,11 @@ function HDFSRequest(n) {
 							    	};
 
 									var option1 = {
-										path : newLocation1.substring(newLocation.indexOf(':8443') + 5),
-										host : url.substring(url.indexOf('https://') + 8, url.indexOf(':8443') ),
-										port : 8443,
-										method : opts.method,
+//										path : newLocation1.substring(newLocation.indexOf(':8443') + 5),
+//										host : url.substring(url.indexOf('https://') + 8, url.indexOf(':8443') ),								
+//										port : 8443,
+										url :  newLocation1,
+										method : "PUT",
 										headers : putPostHeaders,
 										auth : bigcredentials.userid+":"+(bigcredentials.password||""),
 										encoding : opts.encoding,

@@ -300,8 +300,8 @@ function HDFSRequest(n) {
 								if(msg.statusCode == 404 ) {
 									node.error("Unable to create the file......");	
 									fileChanged = false;
-								} else if(msg.statusCode == 404 ) {
-									node.error("Unable to create the file......");	
+								} else if(msg.statusCode == 307 ) {
+									node.error("Need to handle 307......");	
 									fileChanged = false;
 								} else {
 									data += chunk;

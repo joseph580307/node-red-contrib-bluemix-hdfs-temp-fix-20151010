@@ -250,11 +250,13 @@ function HDFSRequest(n) {
 						'Content-Type' : 'application/octet-stream',
 						'Content-Length' : Buffer.byteLength(data)
 					};
+					
+					var url_parts = urllib.parse(newLocation, true);
 
 					var option = {
-						path : newLocation.substring(newLocation.indexOf(':8443') + 5),
-						host : url.substring(url.indexOf('https://') + 8, url.indexOf(':8443') ),
-						port : 8443,
+						path : url_parts.path,
+						hostname : url_parts.hostname,
+						port : url_parts.port,
 						method : opts.method,
 						headers : putPostHeaders,
 						auth : bigcredentials.userid+":"+(bigcredentials.password||""),
@@ -264,7 +266,7 @@ function HDFSRequest(n) {
 //					req.write(data);
 					req.end();
 
-					var reqPut = .request(option, function(res) {
+					var reqPut = (/^https/.test(url))?https:http).request(option, function(res) {
 						console.log("Status code", res.statusCode );
 						node.log("Status code", res.statusCode);
 
@@ -317,12 +319,12 @@ function HDFSRequest(n) {
 										'Content-Length' : Buffer.byteLength(data)
 							    	};
 							    	
-							    	var url_parts = urllib.parse(newLocation1, true);
+							    	var url_parts1 = urllib.parse(newLocation1, true);
 
 									var option1 = {
-										path : url_parts.path,
-										hostname : url_parts.hostname,								
-										port : url_parts.port,
+										path : url_parts1.path,
+										hostname : url_parts1.hostname,								
+										port : url_parts1.port,
 										method : "PUT",
 										headers : putPostHeaders,
 										auth : bigcredentials.userid+":"+(bigcredentials.password||""),

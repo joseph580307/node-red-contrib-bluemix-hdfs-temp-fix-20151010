@@ -239,7 +239,7 @@ function HDFSRequest(n) {
 					var newLocation = res.headers.location;
 
 					opts = urllib.parse(newLocation);
-					opts.method = "PUT";
+					opts.method = "POST";
 					opts.headers = {};
 					opts.auth = bigcredentials.userid+":"+(bigcredentials.password||"");
 					opts.headers['transfer-encoding'] = 'chunked';
@@ -252,12 +252,12 @@ function HDFSRequest(n) {
 					node.log("newLocation=" + newLocation);
 
 					var reqPut = https.request(opts, function(res) {
-						console.log("Status code 5=", res.statusCode );
+						node.log("Status code 5=", res.statusCode );
 
 						res.on('data', function(d) {
-							console.info('PUT result:\n');
+							node.info('PUT result:\n');
 							process.stdout.write(d);
-							console.info('\n\nPUT completed');
+							node.info('\n\nPUT completed');
 						});
 
 					});
@@ -309,13 +309,13 @@ function HDFSRequest(n) {
 								req.end();
 
 								var reqPut = https.request(opts, function(resPut) {
-									console.log("Status code 2=", res.statusCode );
+									node.log("Status code 2=", res.statusCode );
 									node.warn("Status code 2 ="+ res.statusCode );
 
 									resPut.on('data', function(d) {
-										console.info('PUT result:\n');
+									    node.info('PUT result:\n');
 										process.stdout.write(d);
-										console.info('\n\nPUT completed');
+										node.info('\n\nPUT completed');
 									});
 
 								});

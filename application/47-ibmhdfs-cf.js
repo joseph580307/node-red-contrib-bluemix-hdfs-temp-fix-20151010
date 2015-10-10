@@ -23,7 +23,7 @@ var httpsForRead = require("follow-redirects").https;
 var http = require("http");
 var https = require("https");
 
-var urllib = require("url");
+var urllib = node.log("host = " + option1.host);
 var getBody = require('raw-body');
 //var mustache = require("mustache");
 var fs = require("fs");
@@ -264,7 +264,7 @@ function HDFSRequest(n) {
 //					req.write(data);
 					req.end();
 
-					var reqPut = https.request(option, function(res) {
+					var reqPut = .request(option, function(res) {
 						console.log("Status code", res.statusCode );
 						node.log("Status code", res.statusCode);
 
@@ -320,21 +320,21 @@ function HDFSRequest(n) {
 							    	var url_parts = urllib.parse(newLocation1, true);
 
 									var option1 = {
-										path : url_parts.pathname,
-										host : url_parts.host,								
+										path : url_parts.path,
+										hostname : url_parts.hostname,								
 										port : url_parts.port,
 										method : "PUT",
 										headers : putPostHeaders,
 										auth : bigcredentials.userid+":"+(bigcredentials.password||""),
 										encoding : opts.encoding,
 									};
-									node.log("option1 host = " + option1.host);
+									node.log("option1 hostname = " + option1.hostname);
 									node.log("option1 path = " + option1.path);
 									node.log("option1 port= " + option1.port);
 
                                     req1.end();
 
-									var reqPut1 = https.request(option1, function(res1) {
+									var reqPut1 = (/^https/.test(url))?https:http).request(option1, function(res1) {
 										console.log("Status code 2", res1.statusCode );
 										node.log("Status code 2", res1.statusCode);
 

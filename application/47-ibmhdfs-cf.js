@@ -288,12 +288,13 @@ function HDFSRequest(n) {
 							res1.setEncoding('utf8');
 							msg.statusCode = res1.statusCode;
 							msg.headers = res1.headers;							
-							node.warn("Status code 1 ="+ res1.statusCode );
+							node.log("Status code 1 =" + res1.statusCode );
 							
 							
 						if(msg.statusCode == 307) {
 								node.status({fill:"green",shape:"dot",text:"connected"});
-							    newLocation = res.headers.location;
+							    newLocation = res1.headers.location;
+							    node.log("newLocation =" + newLocation);
 
 								opts = urllib.parse(newLocation);
 								opts.method = "PUT";

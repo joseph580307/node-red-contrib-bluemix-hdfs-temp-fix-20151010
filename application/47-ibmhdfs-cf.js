@@ -255,7 +255,7 @@ function HDFSRequest(n) {
 
 					var option = {
 						path : url_parts.path,
-						hostname : url_parts.hostname,
+						host : url_parts.hostname,
 						port : url_parts.port,
 						method : opts.method,
 						headers : putPostHeaders,
@@ -323,7 +323,7 @@ function HDFSRequest(n) {
 
 									var option1 = {
 										path : url_parts1.path,
-										hostname : url_parts1.hostname,								
+										host : url_parts1.hostname,								
 										port : url_parts1.port,
 										method : "PUT",
 										headers : putPostHeaders,

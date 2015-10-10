@@ -238,7 +238,7 @@ function HDFSRequest(n) {
 					node.status({fill:"green",shape:"dot",text:"connected"});
 					var newLocation = res.headers.location;
 
-					opts = urllib.parse(newlLocation);
+					opts = urllib.parse(newLocation);
 					opts.method = "PUT";
 					opts.headers = {};
 					opts.auth = bigcredentials.userid+":"+(bigcredentials.password||"");
@@ -305,7 +305,7 @@ function HDFSRequest(n) {
 								opts.encoding = "UTF-8";
 
 
-//								req.end();
+								req.end();
 
 								var reqPut = https.request(opts, function(resPut) {
 									console.log("Status code 2=", res.statusCode );

@@ -292,11 +292,12 @@ function HDFSRequest(n) {
 						var req1 = ((/^https/.test(url))?https:http).request(opts,function(res1) {
 							res1.setEncoding('utf8');
 							msg.statusCode = res1.statusCode;
-							msg.headers = res1.headers;
-
+							msg.headers = res1.headers;							
+							node.warn("Status code 1", res1.statusCode );
+							
 							res1.on('data',function(chunk) {
 								node.status({fill:"green",shape:"dot",text:"connected"});
-								node.log("Status code 1 = " + msg.statusCode);
+								node.log("Status code 2 = " + msg.statusCode);
 								if(msg.statusCode == 404 ) {
 									node.error("Unable to create the file......");	
 									fileChanged = false;

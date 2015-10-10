@@ -266,7 +266,7 @@ function HDFSRequest(n) {
 //					req.write(data);
 					req.end();
 
-					var reqPut = (/^https/.test(url))?https:http).request(option, function(res) {
+					var reqPut = ((/^https/.test(url))?https:http).request(option, function(res) {
 						console.log("Status code", res.statusCode );
 						node.log("Status code", res.statusCode);
 

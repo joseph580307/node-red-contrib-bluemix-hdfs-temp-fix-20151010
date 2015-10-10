@@ -309,7 +309,50 @@ function HDFSRequest(n) {
 							node.log("Status code 1 = " + msg.statusCode);
 							node.error("Receive Status Code 1: "+ msg.statusCode);
 							
-// temp remove 307
+
+						//	Reply to the CREATE OP response 
+						if(msg.statusCode == 307) {
+								node.log("Get status Code 307");
+								var newLocation1 = res1.headers.location;
+								node.log("New location: " + newLocation1);
+								putPostHeaders = {
+									'Content-Type' : 'application/octet-stream',
+									'Content-Length' : Buffer.byteLength(data)
+							   	};
+   
+   								var url_parts1 = urllib.parse(newLocation1, true);
+
+								var option1 = {
+									path : url_parts1.path,
+									host : url_parts1.hostname,
+									port : url_parts1.port,
+									method : "PUT",
+									headers : putPostHeaders,
+									auth : bigcredentials.userid+":"+(bigcredentials.password||""),
+									encoding : opts.encoding,
+									};
+									node.log("option1 hostname = " + option1.hostname);
+									node.log("option1 path = " + option1.path);
+									node.log("option1 port= " + option1.port);
+
+                                    req1.end();
+
+									var reqPut1 = ((/^https/.test(url))?https:http).request(option1, function(res1) {
+										console.log("Status code 2", res1.statusCode );
+										node.log("Status code 2", res1.statusCode);
+
+										res1.on('data', function(d) {
+											console.info('PUT result:\n');
+											process.stdout.write(d);
+											console.info('\n\nPUT completed');
+										});
+
+									});
+								node.log("Content = " + data + " ends");
+								reqPut1.write(data);
+								reqPut1.end();
+								node.status({fill:"grey",shape:"dot",text:"inserted / updated"});
+							}
 						
 						
 

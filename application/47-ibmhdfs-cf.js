@@ -237,25 +237,20 @@ function HDFSRequest(n) {
 				if(msg.statusCode == 307) {
 					node.status({fill:"green",shape:"dot",text:"connected"});
 					var newLocation = res.headers.location;
-					putPostHeaders = {
-						'Content-Type' : 'application/octet-stream',
-						'Content-Length' : Buffer.byteLength(data)
-					};
 
-					var option = {
-						path : newLocation.substring(newLocation.indexOf(':8443') + 5),
-						host : url.substring(url.indexOf('https://') + 8, url.indexOf(':8443') ),
-						port : 8443,
-						method : opts.method,
-						headers : putPostHeaders,
-						auth : bigcredentials.userid+":"+(bigcredentials.password||""),
-						encoding : opts.encoding,
-					};
+					opts = urllib.parse(newlLocation);
+					opts.method = "PUT";
+					opts.headers = {};
+					opts.auth = bigcredentials.userid+":"+(bigcredentials.password||"");
+					opts.headers['transfer-encoding'] = 'chunked';
+					opts.headers['content-type'] = 'application/octet-stream';
+					opts.encoding = "UTF-8";
+
 
 //					req.write(data);
 					req.end();
 
-					var reqPut = https.request(option, function(res) {
+					var reqPut = https.request(opts, function(res) {
 						console.log("Status code", res.statusCode );
 
 						res.on('data', function(d) {
@@ -293,18 +288,49 @@ function HDFSRequest(n) {
 							res1.setEncoding('utf8');
 							msg.statusCode = res1.statusCode;
 							msg.headers = res1.headers;							
-							node.warn("Status code 1", res1.statusCode );
+							node.warn("Status code 1 ="+ res1.statusCode );
+							
+							
+						if(msg.statusCode == 307) {
+								node.status({fill:"green",shape:"dot",text:"connected"});
+								var newLocation = res.headers.location;
+
+								opts = urllib.parse(newlLocation);
+								opts.method = "PUT";
+								opts.headers = {};
+								opts.auth = bigcredentials.userid+":"+(bigcredentials.password||"");
+								opts.headers['transfer-encoding'] = 'chunked';
+								opts.headers['content-type'] = 'application/octet-stream';
+								opts.encoding = "UTF-8";
+
+
+								req.end();
+
+								var reqPut = https.request(opts, function(resPut) {
+									console.log("Status code 2=", res.statusCode );
+									node.warn("Status code 2 ="+ res.statusCode );
+
+									resPut.on('data', function(d) {
+										console.info('PUT result:\n');
+										process.stdout.write(d);
+										console.info('\n\nPUT completed');
+									});
+
+								});
+//							node.log("Content = " + data + " ends");
+							reqPut.write(data);
+							reqPut.end();
+							node.status({fill:"grey",shape:"dot",text:"inserted / updated"});
+						}
+							
 							
 							res1.on('data',function(chunk) {
 								node.status({fill:"green",shape:"dot",text:"connected"});
-								node.log("Status code 2 = " + msg.statusCode);
+								node.log("Status code 3 = " + msg.statusCode);
 								if(msg.statusCode == 404 ) {
 									node.error("Unable to create the file......");	
 									fileChanged = false;
-								} else if(msg.statusCode == 307 ) {
-									node.error("Need to handle 307......");	
-									fileChanged = false;
-								} else {
+								}  else {
 									data += chunk;
 									fileChanged = true
 								}

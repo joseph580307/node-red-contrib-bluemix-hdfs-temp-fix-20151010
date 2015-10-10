@@ -249,9 +249,10 @@ function HDFSRequest(n) {
 
 //					req.write(data);
 					req.end();
+					node.log("newLocation=" + newLocation);
 
 					var reqPut = https.request(opts, function(res) {
-						console.log("Status code", res.statusCode );
+						console.log("Status code 5=", res.statusCode );
 
 						res.on('data', function(d) {
 							console.info('PUT result:\n');

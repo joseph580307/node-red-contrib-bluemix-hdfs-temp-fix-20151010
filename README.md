@@ -1,59 +1,38 @@
 bluemixhdfs
 ========================
+This is a tempary fix node-red-contrib-bluemix-hdfs 0.2.3
 
 
-Fix Note
+Problem fixed:
 ---------------------------------------------------------------------------
 The ibmhdfs in Node-RED on Bluemix was broken after the Analysys for Hadoop
-server upgrade on July 2015.  The issue has been pending for so long.
+server upgrade on July 2015.  The issue has been pending for 3 months.
 
-With this temparay fix, you can use "ibm hdfs in" to flow data to hadoop now.
+With this temparay fix, you can use "ibm hdfs in" to write data to hadoop now.
 
 To apply the fix:
  
-1. Modify the package.json of you IOT/Node-Red server by change:
+1. Use BLuemix DevOps to edit the package.json in your IOT/Node-Red project.
+   Change this line:
     "node-red-contrib-bluemix-hdfs":"0.x";
     to
     "node-red-contrib-bluemix-hdfs":"git+https://github.com/joseph580307/node-red-contrib-bluemix-hdfs-temp-fix-20151010.git",
         
-2. Redeploy the application.  For me I use Bluemix DevOps. 
+2. Commmit the change. Build/Redeploy the project. 
 
-3. Add the "ibm hdfs in" node in your diagram. The filename, MUST start with /.
-   eg. /sensorinfo.csv
+3. Open your Node-RED. Add the "ibm hdfs in" node in your diagram. In the dialog, the 
+   filename field MUST start with /.
+   eg. /sensorinfo.json
    
-4. Check the "Append new line?". "Overwrite complete file is not tested"
+4. Enable the "Append new line?".
+   I didn't test the "Overwrite complete file" 
    
-5. You can use Hadoop HDFS explore to see if the file is created and data are appended.
+5. That's all. You can use Hadoop HDFS explorer to see if the file is created and data are appended.
+   https://bi-hadoop-prod-<Cluster ID>.services.dal.bluemix.net:8443/gateway/default/hdfs/explorer.html
 
 ---------------------------------------------------------------------------
 
-This is a Node-RED node meant for connecting to the Big Data on IBM Bluemix.
-This Node-RED node can be used only within the IBM Bluemix environment. This node requires a bound Analytics for Apache Hadoop service to work.  
+Reference:
 
-In case there is no bound Analytics for Apache Hadoop, then the node will warn about its inability to connect to the HDFS system and will not work.  
-
-
-Install
--------
-Install from [npm](http://npmjs.org)
-```
-npm install node-red-contrib-bluemix-hdfs
-```
-
-Usage
--------
-
-**HDFS Out Node**
-
-The HDFS Out node can be used to 
-
-1. Create File
-2. Append to File and 
-3. Delete File
-
-  
-**HDFS In Out Node**
-
-The HDFS In Out node can be used to 
-
-1. Read the file contents
+https://www.npmjs.com/package/node-red-contrib-bluemix-hdfs
+http://www.slideshare.net/JosephChang8/bluemix-hadoop-beginners-guide-part-i

@@ -12,23 +12,22 @@ With this temparay fix, you can use "ibm hdfs in" to write data to hadoop now.
 
 To apply the fix:
  
-1. Use BLuemix DevOps to edit the package.json in your IOT/Node-Red project.
-   Change this line:
-    "node-red-contrib-bluemix-hdfs":"0.x";
-    to
+1. Use BLuemix DevOps to edit the package.json in your IOT/Node-Red project.Change this line:   
+    "node-red
+    -contrib-bluemix-hdfs":"0.x";  
+    to  
     "node-red-contrib-bluemix-hdfs":"git+https://github.com/joseph580307/node-red-contrib-bluemix-hdfs-temp-fix-20151010.git",
         
-2. Commmit the change. Build/Redeploy the project. 
+2. Commit the change. Build/Deploy the project. 
 
-3. Open your Node-RED. Add the "ibm hdfs in" node in your diagram. In the dialog, the 
-   filename field MUST start with /.
-   eg. /sensorinfo.json
+3. Open your Node-RED. Add the "ibm hdfs in" node in your diagram. In the dialog, 
+   -- the filename field MUST start with /.  
+       eg. /sensorinfo.json  
+   --  Enable the "Append new line?".  
+   -- I didn't test the "Overwrite complete file" 
    
-4. Enable the "Append new line?".
-   I didn't test the "Overwrite complete file" 
-   
-5. That's all. You can use Hadoop HDFS explorer to see if the file is created and data are appended.
-   https://bi-hadoop-prod-<Cluster ID>.services.dal.bluemix.net:8443/gateway/default/hdfs/explorer.html
+5. That's all. You can use Hadoop HDFS explorer to see if the file is created and data are appended.  
+   eg. https://bi-hadoop-prod-<Cluster ID>.services.dal.bluemix.net:8443/gateway/default/hdfs/explorer.html
 
 ---------------------------------------------------------------------------
 
